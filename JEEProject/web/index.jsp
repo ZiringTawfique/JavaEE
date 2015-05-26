@@ -1,11 +1,3 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
-<%-- 
-    Document   : index
-    Created on : May 20, 2015, 5:05:09 PM
-    Author     : disturbedv1
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,30 +11,15 @@
             <div id="header">
                 <h2>Welcome Random User</h2>
             </div>
-            <div id="content">
-            
-                <sql:query var="result" dataSource="jdbc/soukDatasource">
-                    SELECT * FROM Product
-                </sql:query>
-    
-                <table border="1">
-                    <!-- column headers -->
-                    <tr>
-                    <c:forEach var="columnName" items="${result.columnNames}">
-                        <th><c:out value="${columnName}"/></th>
-                    </c:forEach>
-                    </tr>
-                    <!-- column data -->
-                    <c:forEach var="row" items="${result.rowsByIndex}">
-                        <tr>
-                        <c:forEach var="column" items="${row}">
-                            <td><c:out value="${column}"/></td>
-                        </c:forEach>
-                        </tr>
-                    </c:forEach>
-                </table>
-                
-            </div>
+ <div id="login">
+
+  <h1>Log in</h1>
+  <form action="loginServlet" method="POST">
+    <input type="email" name="username" placeholder="Email" />
+    <input type="password" name ="password" placeholder="Password" />
+    <input id="loginbutton" type="submit" value="Log in" />
+  </form>
+</div>
             <div id="footer">
                 <h2>Stupid Footer!</h2>
             </div>
