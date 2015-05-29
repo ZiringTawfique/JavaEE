@@ -15,7 +15,7 @@
 
   <h1>Log in</h1>
   <form action="loginServlet" method="POST">
-    <input type="email" name="username" placeholder="Email" />
+    <input type="text" name="username" placeholder="Username" />
     <input type="password" name ="password" placeholder="Password" />
     <input id="loginbutton" type="submit" value="Log in" />
   </form>

@@ -1,6 +1,6 @@
 package beans;
 
-import javax.ejb.Stateless;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.ejb.Stateful;
 
-@Stateful
 public class UserBean {
 
     private String username;
@@ -105,14 +104,14 @@ public class UserBean {
     public boolean authenticate() throws ClassNotFoundException, SQLException{
         boolean match = false;
         try{
-            String query;
-            Statement statement = getDBConnection().createStatement();                
+            String query;             
+            //Statement statement = getDBConnection().createStatement();
             query="SELECT username, firstname, lastname, email, address, city, country, "
                     + "balance FROM ACCOUNT WHERE username= ? AND password= ?";
             PreparedStatement st = getDBConnection().prepareStatement(query);
             st.setString(1, this.username);
             st.setString(2, this.password);
-            ResultSet results = statement.executeQuery(query);
+            ResultSet results = st.executeQuery();
             if(results.next()){ //if replaced while
                 this.username = results.getString(1);
                 this.firstname = results.getString(2);
