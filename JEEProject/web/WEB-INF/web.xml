@@ -8,6 +8,10 @@
         <servlet-name>productPageServlet</servlet-name>
         <servlet-class>controller.productPageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>historyServlet</servlet-name>
+        <servlet-class>controller.historyServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>productPageServlet</servlet-name>
         <url-pattern>/productPageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>historyServlet</servlet-name>
+        <url-pattern>/historyServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
