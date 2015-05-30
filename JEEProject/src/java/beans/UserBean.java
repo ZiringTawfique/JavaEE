@@ -8,9 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.ejb.Stateful;
+import java.security.MessageDigest;
+import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
 
 public class UserBean {
-
+    private String salt = "ZtbI052Z";
     private String username;
     private String password;
     private String firstname;
@@ -20,7 +23,6 @@ public class UserBean {
     private String city;
     private String country;
     private double balance;
-    
     private static final String URL = "jdbc:derby://localhost:1527/SoukMVC;create=true;user=MoulSouk;password=mika3achra";
     
     public String getUsername() {
@@ -104,13 +106,16 @@ public class UserBean {
     public boolean authenticate() throws ClassNotFoundException, SQLException{
         boolean match = false;
         try{
+            String protectedPassword = hashPass(salt+password);
             String query;             
             //Statement statement = getDBConnection().createStatement();
             query="SELECT username, firstname, lastname, email, address, city, country, "
                     + "balance FROM ACCOUNT WHERE username= ? AND password= ?";
             PreparedStatement st = getDBConnection().prepareStatement(query);
             st.setString(1, this.username);
-            st.setString(2, this.password);
+            st.setString(2, protectedPassword);
+            
+            System.out.println(protectedPassword);
             ResultSet results = st.executeQuery();
             if(results.next()){ //if replaced while
                 this.username = results.getString(1);
@@ -130,4 +135,22 @@ public class UserBean {
         }
         return match;
     }
+    
+    
+    public static String hashPass(String password) throws NoSuchAlgorithmException{
+        String hashPass = null;
+        
+        
+        if (null==password){return null;}
+        else
+        {
+        MessageDigest messageToDigit = MessageDigest.getInstance("MD5");
+        
+        messageToDigit.update(password.getBytes(),0,password.length());
+             
+        hashPass = new BigInteger(1, messageToDigit.digest()).toString(16);
+        }
+       
+    return hashPass;
+    };
 }
