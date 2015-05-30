@@ -66,20 +66,21 @@ public class historyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        int userID = Integer.parseInt(request.getParameter("userID"));        
-
-
-        try{
-            historyBean.readHistory(userID);
-            request.setAttribute("historyBean",historyBean);
-            RequestDispatcher rd = request.getRequestDispatcher("history.jsp");
-            rd.forward(request, response);
-            //response.forward("firstPage.jsp?name="+username);
-        }catch(Exception e){
-                request.setAttribute("message",e);
-                response.sendRedirect("error.jsp");
+        int userID = 1;//Integer.parseInt(request.getParameter("userID"));        
+        if(request.getParameter("historyButton") != null){
+            try{
+                historyBean.readHistory(userID);
+                request.setAttribute("historyBean",historyBean);
+                RequestDispatcher rd = request.getRequestDispatcher("history.jsp");
+                rd.forward(request, response);
+                //response.forward("firstPage.jsp?name="+username);
+            }catch(Exception e){
+                    request.setAttribute("message",e);
+                    response.sendRedirect("error.jsp");
+            }
+            processRequest(request, response);
         }
-        processRequest(request, response);
+
     }
 
     /**

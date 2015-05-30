@@ -22,6 +22,13 @@ public class HistoryBean {
     private int userID;
     private List<HistoryItem> historyList;
 
+    /*private int itemLine;
+    private int orderID;
+    private int productID;
+    private String productName;
+    private double price;
+    private int quantity;*/
+    
     private static final String URL = "jdbc:derby://localhost:1527/SoukMVC;create=true;user=MoulSouk;password=mika3achra";
     private Connection connection;
     
@@ -48,11 +55,18 @@ public class HistoryBean {
             this.userID = user;
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             connection = DriverManager.getConnection(URL);
-            String query="SELECT * FROM Item WHERE orderID=?";
-            //GIadd make proc that gets a user's orders item by item
+            String query= "SELECT i.Line, i.OrderID, i.ProductID, p.Name, p.Price, i.Quantity FROM Item i LEFT JOIN Product p ON i.ProductID = p.ID WHERE i.OrderID IN (SELECT o.ID FROM Orders o WHERE o.AccountID = ?) ORDER BY i.OrderID, i.Line";
             PreparedStatement statement = connection.prepareStatement(query);                
             statement.setInt(1,this.userID);
             ResultSet results = statement.executeQuery();
+            /*if(results.next()){
+                this.itemLine=results.getInt(1);
+                this.orderID=results.getInt(2);
+                this.productID=results.getInt(3);
+                this.productName=results.getString(4);
+                this.price=results.getDouble(5);
+                this.quantity=results.getInt(6);
+            }*/
             while(results.next()){
                 temp.setItemLine(results.getInt(1));
                 temp.setOrderID(results.getInt(2));
@@ -65,7 +79,7 @@ public class HistoryBean {
             connection.close();
         }
         catch(Exception ex){
-                System.out.println("THERE'S AN EXCEPTION SOMEWHERE" + ex);
+                System.out.println("MOUCHKILA!!! THERE'S AN EXCEPTION SOMEWHERE" + ex);
         }
     }
     

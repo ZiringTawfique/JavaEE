@@ -19,6 +19,10 @@
           <div id="container">
             <div id="header">
                 <h2>Welcome Random User</h2>
+                <form action="historyServlet" method="POST">
+                    <input name="productButton" type="submit" value="Products" />
+                    <input name="historyButton" type="submit" value="Past Orders" />
+                </form> 
             </div>
             <div id="content">
             

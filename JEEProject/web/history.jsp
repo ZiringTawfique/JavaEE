@@ -4,6 +4,7 @@
     Author     : disturbedv1
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,21 +14,17 @@
         <title>Souk MVC: Online Shop - Previous Orders</title>
     </head>
     <body>
+        <jsp:useBean id="historyBean" scope="session" class="beans.HistoryBean" />
         <div id="container">
             <div id="header">
                 <h2>Welcome Random User</h2>
             </div>
             <div id="content">
-                <jsp:useBean id="historyBean" scope="session" class="beans.HistoryBean" />
-    
-                <c:forEach var="item" items="${historyBean.historyList}">
-                    <div id="productTable">
-                        <img src="img/$(item.id).jpg" alt="img/default.png"/>
-                        <p><c:out value=""/></p>
-                    </div>
-                    <br/>
+                <p>chi haja</p>
+                <c:forEach var="item" items="historyBean.historyList">
+                    <p>${item.price}</p>
                 </c:forEach>
-                
+                <p>chi haja oukhra</p>
             </div>
             <div id="footer">
                 <h2>Stupid Footer!</h2>
