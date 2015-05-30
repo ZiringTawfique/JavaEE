@@ -42,7 +42,7 @@ public class loginServlet extends HttpServlet {
         
         try{
             if(userBean.authenticate() == true){
-                System.out.println("HELLO");
+                //System.out.println("HELLO");
                 request.setAttribute("userBean",userBean);
                 RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
                 rd.forward(request, response);
@@ -50,6 +50,7 @@ public class loginServlet extends HttpServlet {
             }
             else{
                 request.setAttribute("invalidLogin",true);
+                //System.out.println("invalidLogin is set now ");
                 RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                 rd.forward(request, response);
             }

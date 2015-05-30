@@ -31,16 +31,23 @@
                     <tr>
                     <c:forEach var="columnName" items="${result.columnNames}">
                         <th><c:out value="${columnName}"/></th>
+                       
                     </c:forEach>
-                    </tr>
+                        <th>Add to Cart</th>
+                        
+                   </tr>
+                
                     <!-- column data -->
                     <c:forEach var="row" items="${result.rowsByIndex}">
                         <tr>
                         <c:forEach var="column" items="${row}">
                             <td><c:out value="${column}"/></td>
+                            
                         </c:forEach>
+                            <td><input id="buyButton" type="submit" value="Buy"/></td>
                         </tr>
                     </c:forEach>
+                      
                 </table>
                 
             </div>
