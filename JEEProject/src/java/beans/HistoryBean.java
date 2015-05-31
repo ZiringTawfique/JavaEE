@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateful;
 
@@ -20,7 +21,7 @@ import javax.ejb.Stateful;
 @Stateful
 public class HistoryBean {
     private int userID;
-    private List<HistoryItem> historyList;
+    private List<HistoryItem> historyList = new ArrayList<HistoryItem>();
 
     /*private int itemLine;
     private int orderID;
@@ -53,6 +54,7 @@ public class HistoryBean {
         try{
             HistoryItem temp = new HistoryItem();
             this.userID = user;
+            System.out.println(this.userID);
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             connection = DriverManager.getConnection(URL);
             String query= "SELECT i.Line, i.OrderID, i.ProductID, p.Name, p.Price, i.Quantity FROM Item i LEFT JOIN Product p ON i.ProductID = p.ID WHERE i.OrderID IN (SELECT o.ID FROM Orders o WHERE o.AccountID = ?) ORDER BY i.OrderID, i.Line";
@@ -74,7 +76,8 @@ public class HistoryBean {
                 temp.setProductName(results.getString(4));
                 temp.setPrice(results.getDouble(5));
                 temp.setQuantity(results.getInt(6));
-                this.getHistoryList().add(temp);
+                this.historyList.add(temp);
+                //System.out.println(historyList);
             }
             connection.close();
         }

@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class UserBean {
     private String salt = "ZtbI052Z";
+    private int ID;
     private String username;
     private String password;
     private String firstname;
@@ -24,6 +25,10 @@ public class UserBean {
     private String country;
     private double balance;
     private static final String URL = "jdbc:derby://localhost:1527/SoukMVC;create=true;user=MoulSouk;password=mika3achra";
+    
+    public int getID() {
+        return ID;
+    }
     
     public String getUsername() {
         return username;
@@ -59,6 +64,10 @@ public class UserBean {
     
     public double getBalance() {
         return balance;
+    }
+    
+    public void setID(int ID) {
+        this.ID = ID;
     }
     
     public void setUsername(String username) {
@@ -109,7 +118,7 @@ public class UserBean {
             String protectedPassword = hashPass(salt+password);
             String query;             
             //Statement statement = getDBConnection().createStatement();
-            query="SELECT username, firstname, lastname, email, address, city, country, "
+            query="SELECT ID, username, firstname, lastname, email, address, city, country, "
                     + "balance FROM ACCOUNT WHERE username= ? AND password= ?";
             PreparedStatement st = getDBConnection().prepareStatement(query);
             st.setString(1, this.username);
@@ -118,14 +127,15 @@ public class UserBean {
             System.out.println(protectedPassword);
             ResultSet results = st.executeQuery();
             if(results.next()){ //if replaced while
-                this.username = results.getString(1);
-                this.firstname = results.getString(2);
-                this.lastname = results.getString(3);
-                this.email = results.getString(4);
-                this.address = results.getString(5);
-                this.city = results.getString(6);
-                this.country = results.getString(7);
-                this.balance = results.getDouble(8);
+                this.ID = results.getInt(1);
+                this.username = results.getString(2);
+                this.firstname = results.getString(3);
+                this.lastname = results.getString(4);
+                this.email = results.getString(5);
+                this.address = results.getString(6);
+                this.city = results.getString(7);
+                this.country = results.getString(8);
+                this.balance = results.getDouble(9);
                 match = true;
             }
             return match;  

@@ -6,6 +6,7 @@
 package controller;
 
 import beans.HistoryBean;
+import beans.UserBean;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,7 +67,7 @@ public class historyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        int userID = 1;//Integer.parseInt(request.getParameter("userID"));        
+        int userID = ((UserBean)request.getSession().getAttribute("userBean")).getID();//Integer.parseInt(request.getParameter("userID"));        
         if(request.getParameter("historyButton") != null){
             try{
                 historyBean.readHistory(userID);
@@ -80,7 +81,12 @@ public class historyServlet extends HttpServlet {
             }
             processRequest(request, response);
         }
-
+        
+        else if(request.getParameter("accountButton") != null){
+            //request.getSession().getAttribute("userBean");
+            RequestDispatcher rd = request.getRequestDispatcher("account.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**

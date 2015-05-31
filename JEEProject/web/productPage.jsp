@@ -22,10 +22,10 @@
                 <form action="historyServlet" method="POST">
                     <input name="productButton" type="submit" value="Products" />
                     <input name="historyButton" type="submit" value="Past Orders" />
+                    <input name="accountButton" type="submit" value="Account" />
                 </form> 
             </div>
             <div id="content">
-            
                 <sql:query var="result" dataSource="jdbc/soukDatasource">
                     SELECT * FROM Product
                 </sql:query>

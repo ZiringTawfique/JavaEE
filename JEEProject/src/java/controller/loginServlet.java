@@ -43,7 +43,7 @@ public class loginServlet extends HttpServlet {
         try{
             if(userBean.authenticate() == true){
                 //System.out.println("HELLO");
-                request.setAttribute("userBean",userBean);
+                request.getSession().setAttribute("userBean",userBean);
                 RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
                 rd.forward(request, response);
                 //response.forward("firstPage.jsp?name="+username);

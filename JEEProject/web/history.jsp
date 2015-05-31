@@ -22,7 +22,7 @@
             <div id="content">
                 <p>chi haja</p>
                 <c:forEach var="item" items="historyBean.historyList">
-                    <p>${item.price}</p>
+                    <p>${item}</p>
                 </c:forEach>
                 <p>chi haja oukhra</p>
             </div>
