@@ -106,6 +106,4 @@ public class HistoryItem{
         this.quantity = quantity;
     }
     
-    
-    
 }

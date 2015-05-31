@@ -22,6 +22,7 @@
             <div id="content">
                 <c:forEach var="item" items="${historyBean.historyList.toArray()}">
                     <p>${item.getProductName()}</p>
+                    <p>${item.getPrice()}</p>
                 </c:forEach>
             </div>
             <div id="footer">
