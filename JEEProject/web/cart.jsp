@@ -33,6 +33,7 @@
                 <c:if test="${historyBean.historyList.isEmpty()== false}">
                     <form action="historyServlet" method="POST">
                         <input name="finalizeButton" type="submit" value="Finalize" />
+                        <input name="emptyButton" type="submit" value="Empty Cart" />
                     </form>
                 </c:if>
                 <!-- TODO: Display images and information regarding each product -->
