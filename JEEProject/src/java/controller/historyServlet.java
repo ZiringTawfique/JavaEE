@@ -92,8 +92,14 @@ public class historyServlet extends HttpServlet {
         }
         
         else if(request.getParameter("updatebutton") != null){
-            userBean.setAddress(request.getParameter("address"));
-            userBean.setEmail(request.getParameter("email"));
+            if(!request.getParameter("address").isEmpty())
+            {
+                userBean.setAddress(request.getParameter("address"));
+            }                
+            if(!request.getParameter("email").isEmpty())
+            {
+                userBean.setEmail(request.getParameter("email"));
+            }                
             try {
                 userBean.UpdateInfo();
                 System.out.println(userBean.getAddress());
