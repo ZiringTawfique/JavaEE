@@ -95,8 +95,6 @@ public class historyServlet extends HttpServlet {
             Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
-        
         if(request.getParameter("historyButton") != null){
             try{
                 historyBean.readHistory(userBean.getID());
@@ -146,8 +144,14 @@ public class historyServlet extends HttpServlet {
         }
         
         else if(request.getParameter("updatebutton") != null){
-            userBean.setAddress(request.getParameter("address"));
-            userBean.setEmail(request.getParameter("email"));
+            if(!request.getParameter("address").isEmpty())
+            {
+                userBean.setAddress(request.getParameter("address"));
+            }                
+            if(!request.getParameter("email").isEmpty())
+            {
+                userBean.setEmail(request.getParameter("email"));
+            }                
             try {
                 userBean.UpdateInfo();
                 System.out.println(userBean.getAddress());
@@ -177,6 +181,20 @@ public class historyServlet extends HttpServlet {
                 historyBean.FinalizeDeal(userBean.getID());
                 request.setAttribute("historyBean",historyBean);
                 userBean.UpdateBean(userBean.getID());
+                RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
+                rd.forward(request, response);
+            }
+            catch(Exception e){
+                request.setAttribute("message",e);
+                response.sendRedirect("error.jsp");
+            }
+        }
+        
+        else if (request.getParameter("emptyButton") != null){
+            try {
+                historyBean.EmptyCart(userBean.getID());
+                System.out.println("EMPTY CART REACHED");
+                request.setAttribute("historyBean",historyBean);
                 RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
                 rd.forward(request, response);
             }
