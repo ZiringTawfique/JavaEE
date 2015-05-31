@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.sql.SQLException;
 
@@ -46,14 +47,7 @@ public class AddToCartBean {
         //System.out.println(productID);
     }
 
-    public int getOrderID() {
-        return orderID;
-    }
-
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
-    }
-
+  
     public int getQuantity() {
         
         return quantity;
@@ -61,7 +55,7 @@ public class AddToCartBean {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-        System.out.println(quantity);
+        //System.out.println(quantity);
         
     }
 
@@ -73,21 +67,39 @@ public class AddToCartBean {
         this.userID = userID;
     }
     
+    public  int getOrderID (int userID) throws ClassNotFoundException, SQLException{
+        System.out.println(userID);
+        String query;             
+            //Statement statement = getDBConnection().createStatement();
+            query="SELECT ID FROM ORDERS WHERE ACCOUNTID= ?";
+            PreparedStatement st = getDBConnection().prepareStatement(query);
+            st.setInt(1, userID);
+            
+            ResultSet results = st.executeQuery();
+            if(results.next()){ //if replaced while
+                this.orderID = results.getInt(1);
+               
+            }
+            
+            return orderID;
+            
+    };
     
    
     public void addItem () throws ClassNotFoundException, SQLException{
         String query;
         line++;
-            query = "INSERT INTO ITEM VALUES(?,?,?,?) WHERE USERNAME =?";
+            query = "INSERT INTO ITEM VALUES(?,?,?,?)";
                     
             PreparedStatement st = getDBConnection().prepareStatement(query);
             st.setInt(1,line);
-           // st.setInt(2, thi);
+            st.setInt(2, this.orderID);
             st.setInt(3, this.productID);
             st.setInt(4, this.quantity);           
             st.executeUpdate();   
     };
     
     
+     
     
 }

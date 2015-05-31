@@ -124,6 +124,13 @@ public class historyServlet extends HttpServlet {
         int selectedProductID = Integer.parseInt(request.getParameter("selectedProductId"));
         addToCartBean.setQuantity(productQuantity);
         addToCartBean.setProductID(selectedProductID);
+            try {
+                addToCartBean.getOrderID(userBean.getID());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         
         request.setAttribute("productBean",productBean);
         RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
