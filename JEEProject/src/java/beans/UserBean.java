@@ -162,6 +162,28 @@ public class UserBean {
         }
     }
     
+    public void UpdateBean(int userID) throws ClassNotFoundException, SQLException{
+        String query;             
+            //Statement statement = getDBConnection().createStatement();
+            query="SELECT ID, username, firstname, lastname, email, address, city, country, "
+                    + "balance FROM ACCOUNT WHERE ID= ?";
+            PreparedStatement st = getDBConnection().prepareStatement(query);
+            st.setInt(1, userID);
+            
+            ResultSet results = st.executeQuery();
+            if(results.next()){ //if replaced while
+                this.ID = results.getInt(1);
+                this.username = results.getString(2);
+                this.firstname = results.getString(3);
+                this.lastname = results.getString(4);
+                this.email = results.getString(5);
+                this.address = results.getString(6);
+                this.city = results.getString(7);
+                this.country = results.getString(8);
+                this.balance = results.getDouble(9);
+            }
+    }
+    
     
     public static String hashPass(String password) throws NoSuchAlgorithmException{
         String hashPass = null;
