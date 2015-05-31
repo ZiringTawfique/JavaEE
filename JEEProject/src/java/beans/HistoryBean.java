@@ -109,5 +109,6 @@ public class HistoryBean {
             PreparedStatement statement = connection.prepareStatement(query);                
             statement.setInt(1,this.userID);
             statement.executeUpdate();
+            ShowCart(user);
     }
 }
