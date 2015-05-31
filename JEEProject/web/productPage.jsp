@@ -13,12 +13,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="CSS/main.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/productpage.css" rel="stylesheet" type="text/css"/>
         <title>JSP Page</title>
     </head>
     <body>
           <div id="container">
             <div id="header">
-                <h2>Welcome Random User</h2>
+                <h2>Welcome, <c:out value="${userBean.firstname}"/>!</h2>
                 <form action="historyServlet" method="POST">
                     <input name="productButton" type="submit" value="Products" />
                     <input name="historyButton" type="submit" value="Past Orders" />
@@ -26,49 +27,32 @@
                     <input name="cartButton" type ="submit" value="Go to Cart" />
                 </form> 
             </div>
+                
+               
             <div id="content">
-                <div class="ItemBox">
-                    <img src="img/7.jpg" alt="img/1.jpg"/>
-                    <h4>T shirt Utd Season 2000/2011</h4>
-                    <p>add price and description as you like here</p>
+              <c:forEach var="item" items="${productBean.productList.toArray()}">
+                <div id="productItems" class="ItemBox">
+                    
+                    <img src="img/${item.getID()}.jpg" alt="img/1.jpg"/>
+                    <h4>${item.getName()}</h4>
+                   <h4>Price: ${item.getPrice()}</h4>
+                    <h4>Category: ${item.getCategory()}</h4>
+                    <p>${item.getDescription()}</p>
+                    
+                    <form action="historyServlet" method="POST">
+                    <input name="buyButton" id="buyButton" type="submit" value="Add to cart"/>
+                    </form>
                 </div>
-                <div class="ItemBox">
-                    <img src="img/10.jpg" alt="img/1.jpg"/>
-                    <h4>T shirt Bayern Season 2000/2011</h4>
-                    <p>add price and description as you like here</p>
-                </div>
-                
-                <sql:query var="result" dataSource="jdbc/soukDatasource">
-                    SELECT * FROM Product
-                </sql:query>
-    
-                <table border="1">
-                    <!-- column headers -->
-                    <tr>
-                    <c:forEach var="columnName" items="${result.columnNames}">
-                        <th><c:out value="${columnName}"/></th>
-                       
-                    </c:forEach>
-                        <th>Add to Cart</th>
-                        
-                   </tr>
-                
-                    <!-- column data -->
-                    <c:forEach var="row" items="${result.rowsByIndex}">
-                        <tr>
-                        <c:forEach var="column" items="${row}">
-                            <td><c:out value="${column}"/></td>
-                            
-                        </c:forEach>
-                            <td><input id="buyButton" type="submit" value="Buy"/></td>
-                        </tr>
-                    </c:forEach>
-                      
-                </table>
-                
+                </c:forEach>
+
             </div>
             <div id="footer">
                 <h2>Random Online Store</h2>
+                
+                 <c:if test="${productBought}">
+                    <h1>HEEEEj</h1>
+                    
+                </c:if>
             </div>
         </div>
     </body>

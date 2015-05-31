@@ -185,20 +185,24 @@ public class UserBean {
     }
     
     
-    public static String hashPass(String password) throws NoSuchAlgorithmException{
+    public static String hashPass(String passwordToHash) throws NoSuchAlgorithmException{
         String hashPass = null;
         
         
-        if (null==password){return null;}
+        if (null==passwordToHash){return null;}
         else
         {
         MessageDigest messageToDigit = MessageDigest.getInstance("MD5");
         
-        messageToDigit.update(password.getBytes(),0,password.length());
-             
+         // we want to update the string of messageToDigit
+        messageToDigit.update(passwordToHash.getBytes(),0,passwordToHash.length());
+        //this will convert it to a base 16 format
         hashPass = new BigInteger(1, messageToDigit.digest()).toString(16);
         }
        
     return hashPass;
     };
 }
+
+
+       
