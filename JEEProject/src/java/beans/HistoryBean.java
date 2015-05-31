@@ -84,7 +84,6 @@ public class HistoryBean {
             statement.setInt(1,this.userID);
             ResultSet results = statement.executeQuery();
             while(results.next()){
-                System.out.println("HEEEEEEEEEEEEEEEE");
                 HistoryItem temp = new HistoryItem();
                 temp.setItemLine(results.getInt(1));
                 temp.setOrderID(results.getInt(2));
@@ -101,4 +100,14 @@ public class HistoryBean {
         }
     }
     
+    public void FinalizeDeal(int user) throws ClassNotFoundException, SQLException{
+        this.userID = user;
+        Class.forName("org.apache.derby.jdbc.ClientDriver");
+            connection = DriverManager.getConnection(URL);
+            System.out.println();
+            String query= "UPDATE ORDERS O SET O.PAID = TRUE WHERE O.TOTAL <= (SELECT BALANCE FROM ACCOUNT A WHERE A.ID = ?)";
+            PreparedStatement statement = connection.prepareStatement(query);                
+            statement.setInt(1,this.userID);
+            statement.executeUpdate();
+    }
 }

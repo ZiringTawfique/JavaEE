@@ -16,7 +16,12 @@
     <body>        
         <div id="container">
             <div id="header">
-                <h2>Welcome, <c:out value="${userBean.username}"/></h2>
+                <h2>Welcome <c:out value="${userBean.firstname}"/>!</h2>
+                <form action="historyServlet" method="POST">
+                    <input name="productButton" type="submit" value="Products" />
+                    <input name="historyButton" type="submit" value="Past Orders" />
+                    <input name="cartButton" type ="submit" value="Go to Cart" />
+                </form> 
             </div>
         
         <sql:query var="result" dataSource="jdbc/soukDatasource">
@@ -43,6 +48,7 @@
                       <input type="email" name ="email" placeholder="E-mail" />
                       <input name="updatebutton" type="submit" value="Update" />
                     </form>  
+                    <!-- TODO: Check first if fields are empty, then update -->
                 </div>
         </div>
     </body>
