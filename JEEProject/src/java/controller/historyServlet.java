@@ -5,6 +5,7 @@
  */
 package controller;
 
+import beans.AddToCartBean;
 import beans.HistoryBean;
 import beans.ProductBean;
 import beans.UserBean;
@@ -28,10 +29,16 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class historyServlet extends HttpServlet {
     @EJB
+    private AddToCartBean addToCartBean;
+    @EJB
     private ProductBean productBean;
     HistoryBean historyBean = lookupHistoryBeanBean();
     //ProductBean productBean = lookupProductBean();
     UserBean userBean;
+    AddToCartBean addToCart;
+    
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -74,6 +81,9 @@ public class historyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        
+      
+        
         userBean = (UserBean)request.getSession().getAttribute("userBean");
        
         
@@ -110,13 +120,14 @@ public class historyServlet extends HttpServlet {
         }
          else if(request.getParameter("buyButton") != null){
              
-              request.setAttribute("productBean",productBean);
-            
-              
-     
-             request.setAttribute("historyBean","bought");
-                RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
-                rd.forward(request, response);
+        int productQuantity = Integer.parseInt(request.getParameter("quantity"));
+        int selectedProductID = Integer.parseInt(request.getParameter("selectedProductId"));
+        addToCartBean.setQuantity(productQuantity);
+        addToCartBean.setProductID(selectedProductID);
+        
+        request.setAttribute("productBean",productBean);
+        RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
+        rd.forward(request, response);
              
              
         }

@@ -39,12 +39,15 @@
                     <h4>Category: ${item.getCategory()}</h4>
                     <p>${item.getDescription()}</p>
                     
-                    <form action="historyServlet" method="POST">
-                    <input name="buyButton" id="buyButton" type="submit" value="Add to cart"/>
+                    <form action="historyServlet" method="POST">                   
+                  <input id="quantity" name="quantity" type="text" placeholder="Quantity" value="1"/>
+                  <input id="buyButton" name="buyButton" type="submit" value="Add to cart"/>
+                    <input name="selectedProductId" id="selectedProductId" type="hidden" value="${item.getID()}"/>
                     </form>
                 </div>
                 </c:forEach>
-
+                
+               
             </div>
             <div id="footer">
                 <h2>Random Online Store</h2>
