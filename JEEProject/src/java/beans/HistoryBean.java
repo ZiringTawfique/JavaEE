@@ -49,11 +49,42 @@ public class HistoryBean {
             System.out.println(this.userID);
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             connection = DriverManager.getConnection(URL);
-            String query= "SELECT i.Line, i.OrderID, i.ProductID, p.Name, p.Price, i.Quantity FROM Item i LEFT JOIN Product p ON i.ProductID = p.ID WHERE i.OrderID IN (SELECT o.ID FROM Orders o WHERE o.AccountID = ?) ORDER BY i.OrderID, i.Line";
+            String query= "SELECT i.Line, i.OrderID, i.ProductID, p.Name, p.Price, i.Quantity "
+                    + "FROM Item i LEFT JOIN Product p ON i.ProductID = p.ID "
+                    + "WHERE i.OrderID IN (SELECT o.ID FROM Orders o WHERE o.AccountID = ? AND o.PAID = TRUE) "
+                    + "ORDER BY i.OrderID, i.Line";
             PreparedStatement statement = connection.prepareStatement(query);                
             statement.setInt(1,this.userID);
             ResultSet results = statement.executeQuery();
             while(results.next()){
+                HistoryItem temp = new HistoryItem();
+                temp.setItemLine(results.getInt(1));
+                temp.setOrderID(results.getInt(2));
+                temp.setProductID(results.getInt(3));
+                temp.setProductName(results.getString(4));
+                temp.setPrice(results.getDouble(5));
+                temp.setQuantity(results.getInt(6));
+                this.historyList.add(temp);
+            }
+            connection.close();
+        }
+        catch(Exception ex){
+                System.out.println("MOUCHKILA!!! THERE'S AN EXCEPTION SOMEWHERE" + ex);
+        }
+    }
+    
+    public void ShowCart(int user) throws ClassNotFoundException, SQLException{
+        try{
+            this.historyList = new ArrayList<HistoryItem>();
+            this.userID = user;
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            connection = DriverManager.getConnection(URL);
+            String query= "SELECT i.Line, i.OrderID, i.ProductID, p.Name, p.Price, i.Quantity FROM Item i LEFT JOIN Product p ON i.ProductID = p.ID WHERE i.OrderID IN (SELECT o.ID FROM Orders o WHERE o.AccountID = ? AND o.PAID = FALSE) ORDER BY i.OrderID, i.Line";
+            PreparedStatement statement = connection.prepareStatement(query);                
+            statement.setInt(1,this.userID);
+            ResultSet results = statement.executeQuery();
+            while(results.next()){
+                System.out.println("HEEEEEEEEEEEEEEEE");
                 HistoryItem temp = new HistoryItem();
                 temp.setItemLine(results.getInt(1));
                 temp.setOrderID(results.getInt(2));

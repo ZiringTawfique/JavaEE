@@ -103,6 +103,20 @@ public class historyServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("account.jsp");
             rd.forward(request, response);
         }
+        
+        else if (request.getParameter("cartButton") != null){
+            try{
+                historyBean.ShowCart(userBean.getID());
+                request.setAttribute("historyBean",historyBean);
+                //System.out.println(historyBean.getHistoryList().get(0).getProductName());
+                RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
+                rd.forward(request, response);
+            }catch(Exception e){
+                    request.setAttribute("message",e);
+                    response.sendRedirect("error.jsp");
+            }
+            processRequest(request, response);
+        }
     }
 
     /**
