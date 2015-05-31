@@ -55,11 +55,11 @@ public class UserBean {
     }
     
     public String getCity() {
-        return address;
+        return city;
     }
     
     public String getCountry() {
-        return address;
+        return country;
     }
     
     public double getBalance() {
@@ -124,7 +124,7 @@ public class UserBean {
             st.setString(1, this.username);
             st.setString(2, protectedPassword);
             
-            System.out.println(protectedPassword);
+            //System.out.println(protectedPassword);
             ResultSet results = st.executeQuery();
             if(results.next()){ //if replaced while
                 this.ID = results.getInt(1);
@@ -144,6 +144,22 @@ public class UserBean {
                 System.out.println("THERE'S AN EXCEPTION SOMEWHERE" + ex);
         }
         return match;
+    }
+    
+    public void UpdateInfo() throws ClassNotFoundException, SQLException{
+        try{
+            String query;
+            query = "UPDATE ACCOUNT SET ADDRESS=?, EMAIL=? WHERE USERNAME =?";
+            PreparedStatement st = getDBConnection().prepareStatement(query);
+            st.setString(1, this.address);
+            st.setString(2, this.email);
+            st.setString(3, this.username);
+            System.out.println(getAddress());
+            st.executeUpdate();
+        }
+        catch(Exception ex){
+            System.out.println("THERE'S AN EXCEPTION SOMEWHERE" + ex);
+        }
     }
     
     

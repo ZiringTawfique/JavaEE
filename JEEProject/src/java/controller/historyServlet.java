@@ -8,6 +8,7 @@ package controller;
 import beans.HistoryBean;
 import beans.UserBean;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class historyServlet extends HttpServlet {
     HistoryBean historyBean = lookupHistoryBeanBean();
-
+    UserBean userBean;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,6 +36,7 @@ public class historyServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -67,10 +69,11 @@ public class historyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        int userID = ((UserBean)request.getSession().getAttribute("userBean")).getID();//Integer.parseInt(request.getParameter("userID"));        
+        userBean = (UserBean)request.getSession().getAttribute("userBean");
+        
         if(request.getParameter("historyButton") != null){
             try{
-                historyBean.readHistory(userID);
+                historyBean.readHistory(userBean.getID());
                 request.setAttribute("historyBean",historyBean);
                 RequestDispatcher rd = request.getRequestDispatcher("history.jsp");
                 rd.forward(request, response);
@@ -84,6 +87,19 @@ public class historyServlet extends HttpServlet {
         
         else if(request.getParameter("accountButton") != null){
             //request.getSession().getAttribute("userBean");
+            RequestDispatcher rd = request.getRequestDispatcher("account.jsp");
+            rd.forward(request, response);
+        }
+        
+        else if(request.getParameter("updatebutton") != null){
+            userBean.setAddress(request.getParameter("address"));
+            userBean.setEmail(request.getParameter("email"));
+            try {
+                userBean.UpdateInfo();
+                System.out.println(userBean.getAddress());
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
             RequestDispatcher rd = request.getRequestDispatcher("account.jsp");
             rd.forward(request, response);
         }

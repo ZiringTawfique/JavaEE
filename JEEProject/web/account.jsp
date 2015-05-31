@@ -16,54 +16,33 @@
     <body>        
         <div id="container">
             <div id="header">
-                <h2>Welcome, <c:out value="${param.username}"/></h2>
+                <h2>Welcome, <c:out value="${userBean.username}"/></h2>
             </div>
         
         <sql:query var="result" dataSource="jdbc/soukDatasource">
                     SELECT firstname, lastname, address, city, country, email, 
-                    BALANCE FROM Account where username = '<c:out value="${param.username}"/>'
+                    BALANCE FROM Account where username = '<c:out value="${userBean.username}"/>'
         </sql:query>
                     <h2>Your personal information</h2>
                     
-                    <jsp:useBean id="userBean" scope="session" class="beans.UserBean" /> 
-                    <!-- column data -->
-                    <c:forEach var="row" items="${result.rowsByIndex}">
-                        <c:set var="count" value="0" scope="page" />
-                        <c:forEach var="column" items="${row}">
-                            
-                            <h3><c:out value="${result.columnNames[count]}"/>: <c:out value="${column}"/></h3>
-                            <jsp:setProperty name="userBean" property="username" value="${param.username}"/>
-                            <jsp:setProperty name="userBean" property="address" value="${row[2]}"/>
-                            <jsp:setProperty name="userBean" property="email" value="${row[5]}"/>
-                            <c:set var="count" value="${count + 1}" scope="page"/>
-                            
-                        </c:forEach>
-                    </c:forEach>
+                    <h3><c:out value="Firstname" /> : <c:out value="${userBean.getFirstname()}" /></h3>
+                    <h3><c:out value="Lastname" /> : <c:out value="${userBean.getLastname()}" /></h3>
+                    <h3><c:out value="Address" /> : <c:out value="${userBean.getAddress()}" /></h3>
+                    <h3><c:out value="City" /> : <c:out value="${userBean.getCity()}" /></h3>
+                    <h3><c:out value="Country" /> : <c:out value="${userBean.getCountry()}" /></h3>
+                    <h3><c:out value="Email" /> : <c:out value="${userBean.getEmail()}" /></h3>
+                    <h3><c:out value="Balance" /> : <c:out value="${userBean.getBalance()}" /></h3>
                        
-                            
-                <h3>Update your contact information here</h3>
-                
+                    
                  <div id="updateinfo">
-
+                    <br/>
+                    <h3>Update your contact information here</h3>
                     <h4>New contact information</h4>
-                    <form action="account.jsp?username=${param.username}" method='POST'>
-                      <input type="text" name="username" value="${param.username}" disabled />
+                    <form action="historyServlet" method='POST'>
                       <input type="text" name="address" placeholder="Address" />
                       <input type="email" name ="email" placeholder="E-mail" />
-                      <input id="updatebutton" type="submit" value="Log in" />
-                    </form>
-                      
-                <c:if test="${pageContext.request.method=='POST'}">
-                    ${userBean.address}
-                    
-                    <!-- This here doesn't work for now -->
-                    <sql:update dataSource="jdbc/soukDatasource">
-                        UPDATE ACCOUNT SET address=?, email=? where username=?
-                        <sql:param value='${userBean.address}' />
-                        <sql:param value='email' />
-                        <sql:param value='username' />
-                    </sql:update> 
-                </c:if>
-</div>
+                      <input name="updatebutton" type="submit" value="Update" />
+                    </form>  
+                </div>
         </div>
     </body>
