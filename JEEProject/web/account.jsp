@@ -20,6 +20,7 @@
                 <form action="historyServlet" method="POST">
                     <input name="productButton" type="submit" value="Products" />
                     <input name="historyButton" type="submit" value="Past Orders" />
+                    <input name="accountButton" type="submit" value="Account" />
                     <input name="cartButton" type ="submit" value="Go to Cart" />
                 </form> 
             </div>
