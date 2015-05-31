@@ -158,6 +158,7 @@ public class historyServlet extends HttpServlet {
             try{
                 historyBean.FinalizeDeal(userBean.getID());
                 request.setAttribute("historyBean",historyBean);
+                userBean.UpdateBean(userBean.getID());
                 RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
                 rd.forward(request, response);
             }
