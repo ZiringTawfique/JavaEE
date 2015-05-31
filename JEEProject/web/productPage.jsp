@@ -27,12 +27,12 @@
                 </form> 
             </div>
             <div id="content">
-                <div id="ItemBox">
+                <div class="ItemBox">
                     <img src="img/7.jpg" alt="img/1.jpg"/>
                     <h4>T shirt Utd Season 2000/2011</h4>
                     <p>add price and description as you like here</p>
                 </div>
-                <div id="ItemBox">
+                <div class="ItemBox">
                     <img src="img/10.jpg" alt="img/1.jpg"/>
                     <h4>T shirt Bayern Season 2000/2011</h4>
                     <p>add price and description as you like here</p>
