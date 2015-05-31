@@ -26,21 +26,15 @@
             </div>
             
             <div id="content">
-                <div id="ListBox">
-                    <img src="img/7.jpg" alt="img/1.jpg"/>
-                    <span class="spacing"><h4>T shirt Utd Season 2000/2011</h4></span>
-                    <span class="spacing"><p>300 SEK   *   1   =   300 SEK</p></span>
-                </div>
-                <br/>
-                <div id="ListBox">
-                    <img src="img/10.jpg" alt="img/1.jpg"/>
-                    <span class="spacing"><h4>T shirt Bayern Season 2000/2011</h4></span>
-                    <span class="spacing"><p>800 SEK   *   1   =   800 SEK</p></span>
-                </div>
-                
+               
                 <c:forEach var="item" items="${historyBean.historyList.toArray()}">
-                    <p>${item.getProductName()}</p>
-                    <p>${item.getPrice()}</p>
+                    <div class="ListBox">
+                        <img src="img/${item.getProductID()}.jpg" alt="img/1.jpg"/>
+                        <div class="boxText">
+                            <h4 class="historyName">${item.getProductName()}</h4>
+                            <p class="historyPrice">${item.getPrice()} SEK   *   ${item.getQuantity()}   =   ${item.getPrice() * item.getQuantity()} SEK</p>
+                        </div>
+                    </div>
                 </c:forEach>
             </div>
             <div id="footer">
