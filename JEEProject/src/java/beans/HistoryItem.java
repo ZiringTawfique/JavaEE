@@ -5,11 +5,13 @@
  */
 package beans;
 
+import java.io.Serializable;
+
 /**
  *
  * @author disturbedv1
  */
-public class HistoryItem {
+public class HistoryItem{
     private int itemLine;
     private int orderID;
     private int productID;

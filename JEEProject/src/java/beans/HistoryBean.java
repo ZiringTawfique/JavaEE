@@ -21,14 +21,7 @@ import javax.ejb.Stateful;
 @Stateful
 public class HistoryBean {
     private int userID;
-    private List<HistoryItem> historyList = new ArrayList<HistoryItem>();
-
-    /*private int itemLine;
-    private int orderID;
-    private int productID;
-    private String productName;
-    private double price;
-    private int quantity;*/
+    private ArrayList<HistoryItem> historyList;
     
     private static final String URL = "jdbc:derby://localhost:1527/SoukMVC;create=true;user=MoulSouk;password=mika3achra";
     private Connection connection;
@@ -39,7 +32,7 @@ public class HistoryBean {
     /**
      * @return the historyList
      */
-    public List<HistoryItem> getHistoryList() {
+    public ArrayList<HistoryItem> getHistoryList() {
         return historyList;
     }
     
@@ -52,7 +45,7 @@ public class HistoryBean {
     
     public void readHistory(int user) throws ClassNotFoundException, SQLException{
         try{
-            HistoryItem temp = new HistoryItem();
+            this.historyList = new ArrayList<HistoryItem>();
             this.userID = user;
             System.out.println(this.userID);
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -61,15 +54,8 @@ public class HistoryBean {
             PreparedStatement statement = connection.prepareStatement(query);                
             statement.setInt(1,this.userID);
             ResultSet results = statement.executeQuery();
-            /*if(results.next()){
-                this.itemLine=results.getInt(1);
-                this.orderID=results.getInt(2);
-                this.productID=results.getInt(3);
-                this.productName=results.getString(4);
-                this.price=results.getDouble(5);
-                this.quantity=results.getInt(6);
-            }*/
             while(results.next()){
+                HistoryItem temp = new HistoryItem();
                 temp.setItemLine(results.getInt(1));
                 temp.setOrderID(results.getInt(2));
                 temp.setProductID(results.getInt(3));
@@ -77,7 +63,6 @@ public class HistoryBean {
                 temp.setPrice(results.getDouble(5));
                 temp.setQuantity(results.getInt(6));
                 this.historyList.add(temp);
-                //System.out.println(historyList);
             }
             connection.close();
         }

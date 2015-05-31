@@ -14,17 +14,15 @@
         <title>Souk MVC: Online Shop - Previous Orders</title>
     </head>
     <body>
-        <jsp:useBean id="historyBean" scope="session" class="beans.HistoryBean" />
+        <jsp:useBean id="historyBean" scope="request" class="beans.HistoryBean" />
         <div id="container">
             <div id="header">
                 <h2>Welcome Random User</h2>
             </div>
             <div id="content">
-                <p>chi haja</p>
-                <c:forEach var="item" items="historyBean.historyList">
-                    <p>${item}</p>
+                <c:forEach var="item" items="${historyBean.historyList.toArray()}">
+                    <p>${item.getProductName()}</p>
                 </c:forEach>
-                <p>chi haja oukhra</p>
             </div>
             <div id="footer">
                 <h2>Stupid Footer!</h2>
