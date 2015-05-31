@@ -117,6 +117,19 @@ public class historyServlet extends HttpServlet {
             }
             processRequest(request, response);
         }
+        
+        else if (request.getParameter("finalizeButton") != null){
+            try{
+                historyBean.FinalizeDeal(userBean.getID());
+                request.setAttribute("historyBean",historyBean);
+                RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
+                rd.forward(request, response);
+            }
+            catch(Exception e){
+                request.setAttribute("message",e);
+                response.sendRedirect("error.jsp");
+            }
+        }
     }
 
     /**
