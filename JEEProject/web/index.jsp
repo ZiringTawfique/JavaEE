@@ -37,7 +37,7 @@
   
 </div>
             <div id="footer">
-                <h2>Stupid Footer!</h2>
+                <h2>Random Online Store</h2>
             </div>
         </div>
     </body>

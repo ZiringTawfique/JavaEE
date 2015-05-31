@@ -117,13 +117,15 @@ public class historyServlet extends HttpServlet {
             rd.forward(request, response);
         }
          else if(request.getParameter("buyButton") != null){
-             
+             boolean itemBought=true;
         int productQuantity = Integer.parseInt(request.getParameter("quantity"));
         int selectedProductID = Integer.parseInt(request.getParameter("selectedProductId"));
         addToCartBean.setQuantity(productQuantity);
         addToCartBean.setProductID(selectedProductID);
             try {
                 addToCartBean.getOrderID(userBean.getID());
+                addToCartBean.addItem();
+               
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -131,6 +133,7 @@ public class historyServlet extends HttpServlet {
             }
         
         request.setAttribute("productBean",productBean);
+        request.setAttribute("itemBought",itemBought);
         RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
         rd.forward(request, response);
              

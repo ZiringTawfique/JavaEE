@@ -20,6 +20,7 @@
           <div id="container">
             <div id="header">
                 <h2>Welcome, <c:out value="${userBean.firstname}"/>!</h2>
+              
                 <form action="historyServlet" method="POST">
                     <input name="productButton" type="submit" value="Products" />
                     <input name="historyButton" type="submit" value="Past Orders" />
@@ -49,13 +50,13 @@
                 
                
             </div>
+            <c:if test="${itemBought}">
+            <script type="text/javascript">alert('Your product has been added to the shopping basket');</script>
+                </c:if>
             <div id="footer">
                 <h2>Random Online Store</h2>
                 
-                 <c:if test="${productBought}">
-                    <h1>HEEEEj</h1>
-                    
-                </c:if>
+                
             </div>
         </div>
     </body>
