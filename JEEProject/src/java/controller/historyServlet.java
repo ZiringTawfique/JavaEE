@@ -6,11 +6,13 @@
 package controller;
 
 import beans.HistoryBean;
+import beans.ProductBean;
 import beans.UserBean;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -25,7 +27,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author disturbedv1
  */
 public class historyServlet extends HttpServlet {
+    @EJB
+    private ProductBean productBean;
     HistoryBean historyBean = lookupHistoryBeanBean();
+    //ProductBean productBean = lookupProductBean();
     UserBean userBean;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -70,10 +75,22 @@ public class historyServlet extends HttpServlet {
             throws ServletException, IOException {
         
         userBean = (UserBean)request.getSession().getAttribute("userBean");
+       
+        
+        try {
+            productBean.readProduct();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
         
         if(request.getParameter("historyButton") != null){
             try{
                 historyBean.readHistory(userBean.getID());
+               
                 request.setAttribute("historyBean",historyBean);
                 RequestDispatcher rd = request.getRequestDispatcher("history.jsp");
                 rd.forward(request, response);
@@ -87,7 +104,26 @@ public class historyServlet extends HttpServlet {
         
         else if(request.getParameter("accountButton") != null){
             //request.getSession().getAttribute("userBean");
-            RequestDispatcher rd = request.getRequestDispatcher("account.jsp");
+            
+            RequestDispatcher rd = request.getRequestDispatcher("account.jsp");           
+            rd.forward(request, response);
+        }
+         else if(request.getParameter("buyButton") != null){
+             
+              request.setAttribute("productBean",productBean);
+            
+              
+     
+             request.setAttribute("historyBean","bought");
+                RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
+                rd.forward(request, response);
+             
+             
+        }
+        else if(request.getParameter("productButton") != null){
+            request.setAttribute("historyBean",historyBean);
+            request.setAttribute("productBean",productBean);
+            RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
             rd.forward(request, response);
         }
         
@@ -151,5 +187,15 @@ public class historyServlet extends HttpServlet {
             throw new RuntimeException(ne);
         }
     }
-
+    /*
+        private ProductBean lookupProductBean() {
+        try {
+            Context c = new InitialContext();
+            return (ProductBean) c.lookup("java:global/JEEProject/ProductBean!beans.ProductBean");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+*/
 }

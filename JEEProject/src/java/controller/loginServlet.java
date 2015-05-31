@@ -5,6 +5,7 @@
  */
 package controller;
 
+import beans.ProductBean;
 import beans.UserBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,10 +41,15 @@ public class loginServlet extends HttpServlet {
         userBean.setUsername(username);
         userBean.setPassword(password);
         
+        ProductBean productBean = new ProductBean();
+        
+        
         try{
             if(userBean.authenticate() == true){
                 //System.out.println("HELLO");
                 request.getSession().setAttribute("userBean",userBean);
+                productBean.readProduct();
+                request.setAttribute("productBean",productBean);
                 RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
                 rd.forward(request, response);
                 //response.forward("firstPage.jsp?name="+username);

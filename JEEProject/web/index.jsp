@@ -10,7 +10,7 @@
     <body>
         <div id="container">
             <div id="header">
-                <h2>Welcome Random User</h2>
+                <h2>Welcome to Sock Online Shopping </h2>
             </div>
  <div id="login">
 
