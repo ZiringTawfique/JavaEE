@@ -13,7 +13,7 @@ and open the template in the editor.
     color: white;
     display: block;
     border: 1px solid black;
-    top-margin:0;
+    margin-top: 0;
 }
 
 #content {
@@ -24,7 +24,31 @@ and open the template in the editor.
 #footer { 
     border: 1px solid black;
     background: darkgray;
-    bottom-margin: 0;
+    margin-bottom: 0;
+}
+
+#ItemBox{
+    display: inline-block;
+    background-color: lightsteelblue;
+    border-radius: 5%;
+}
+
+#ListBox{
+    display: block;
+    background-color: lightsteelblue;
+    border-radius: 5%;
+}
+
+img{
+    max-width:90px;
+    max-height:180px;
+    width: auto;
+    height: auto;
+    border-radius: 5%;
+}
+
+.spacing{
+    display: inline-block;
 }
 
 #productTable{

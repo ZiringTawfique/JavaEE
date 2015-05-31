@@ -17,10 +17,27 @@
         <jsp:useBean id="historyBean" scope="request" class="beans.HistoryBean" />
         <div id="container">
             <div id="header">
-                <h2>Welcome Random User</h2>
+                <h2>Welcome <c:out value="${userBean.firstname}"/>!</h2>
+                <form action="historyServlet" method="POST">
+                    <input name="productButton" type="submit" value="Products" />
+                    <input name="historyButton" type="submit" value="Past Orders" />
+                    <input name="accountButton" type="submit" value="Account" />
+                </form> 
             </div>
             
             <div id="content">
+                <div id="ListBox">
+                    <img src="img/7.jpg" alt="img/1.jpg"/>
+                    <span class="spacing"><h4>T shirt Utd Season 2000/2011</h4></span>
+                    <span class="spacing"><p>300 SEK   *   1   =   300 SEK</p></span>
+                </div>
+                <br/>
+                <div id="ListBox">
+                    <img src="img/10.jpg" alt="img/1.jpg"/>
+                    <span class="spacing"><h4>T shirt Bayern Season 2000/2011</h4></span>
+                    <span class="spacing"><p>800 SEK   *   1   =   800 SEK</p></span>
+                </div>
+                
                 <c:forEach var="item" items="${historyBean.historyList.toArray()}">
                     <p>${item.getProductName()}</p>
                     <p>${item.getPrice()}</p>
