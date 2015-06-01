@@ -22,7 +22,7 @@ public class HistoryBean {
     private int userID;
     private ArrayList<HistoryItem> historyList;
     
-    private static final String URL = "jdbc:derby://localhost:1527/SoukMVC;create=true;user=MoulSouk;password=mika3achra";
+    private static final String URL = "jdbc:derby://localhost:1527/Market;create=true;user=test;password=test";
     private Connection connection;
     
     public HistoryBean() {

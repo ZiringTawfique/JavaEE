@@ -22,13 +22,10 @@
                     <input name="historyButton" type="submit" value="Past Orders" />
                     <input name="accountButton" type="submit" value="Account" />
                     <input name="cartButton" type ="submit" value="Go to Cart" />
+                    <input name="logoutButton" type="submit" value="Log out"/>
                 </form> 
             </div>
         
-        <sql:query var="result" dataSource="jdbc/soukDatasource">
-                    SELECT firstname, lastname, address, city, country, email, 
-                    BALANCE FROM Account where username = '<c:out value="${userBean.username}"/>'
-        </sql:query>
                     <h2>Your personal information</h2>
                     
                     <h3><c:out value="Firstname" /> : <c:out value="${userBean.getFirstname()}" /></h3>
