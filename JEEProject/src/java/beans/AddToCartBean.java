@@ -68,7 +68,7 @@ public class AddToCartBean {
     }
     
     public  int getOrderID (int userID) throws ClassNotFoundException, SQLException{
-        System.out.println(userID);
+        //System.out.println(userID);
         String query;             
             //Statement statement = getDBConnection().createStatement();
             query="SELECT ID FROM ORDERS WHERE ACCOUNTID= ?";
@@ -80,23 +80,28 @@ public class AddToCartBean {
                 this.orderID = results.getInt(1);
                
             }
-            
+           // System.out.println(orderID);
             return orderID;
             
     };
     
    
-    public void addItem () throws ClassNotFoundException, SQLException{
+    public int addItem () throws ClassNotFoundException, SQLException{
         String query;
         line++;
+        
+        System.out.println(line);
             query = "INSERT INTO ITEM VALUES(?,?,?,?)";
                     
             PreparedStatement st = getDBConnection().prepareStatement(query);
             st.setInt(1,line);
             st.setInt(2, this.orderID);
             st.setInt(3, this.productID);
-            st.setInt(4, this.quantity);           
-            st.executeUpdate();   
+            st.setInt(4, this.quantity); 
+            
+            
+          int sucess =  st.executeUpdate();   
+          return sucess;
     };
     
     

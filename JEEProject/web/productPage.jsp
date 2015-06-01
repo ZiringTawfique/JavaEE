@@ -53,6 +53,9 @@
             <c:if test="${itemBought}">
             <script type="text/javascript">alert('Your product has been added to the shopping basket');</script>
                 </c:if>
+             <c:if test="${itemNOTBought}">
+            <script type="text/javascript">alert('Your product has NOT been added ');</script>
+                </c:if>
             <div id="footer">
                 <h2>Random Online Store</h2>
                 

@@ -36,6 +36,7 @@ public class historyServlet extends HttpServlet {
     //ProductBean productBean = lookupProductBean();
     UserBean userBean;
     AddToCartBean addToCart;
+    int status;
     
     
     
@@ -118,13 +119,15 @@ public class historyServlet extends HttpServlet {
         }
          else if(request.getParameter("buyButton") != null){
              boolean itemBought=true;
+             boolean itemNOTBought=true;
         int productQuantity = Integer.parseInt(request.getParameter("quantity"));
         int selectedProductID = Integer.parseInt(request.getParameter("selectedProductId"));
         addToCartBean.setQuantity(productQuantity);
         addToCartBean.setProductID(selectedProductID);
             try {
                 addToCartBean.getOrderID(userBean.getID());
-                addToCartBean.addItem();
+                 status = addToCartBean.addItem();
+                
                
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,7 +136,11 @@ public class historyServlet extends HttpServlet {
             }
         
         request.setAttribute("productBean",productBean);
-        request.setAttribute("itemBought",itemBought);
+        if (status ==1){
+        request.setAttribute("itemBought",itemBought);}
+        else {request.setAttribute("itemNOTBought",itemNOTBought);
+        
+        }
         RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
         rd.forward(request, response);
              
