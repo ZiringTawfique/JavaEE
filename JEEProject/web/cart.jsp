@@ -29,8 +29,13 @@
             </div>
             <div id="content">
                 <c:forEach var="item" items="${historyBean.historyList.toArray()}">
-                        <p>${item.getProductName()}</p>
-                        <p>${item.getPrice()}</p>
+                    <div class="ListBox">
+                        <img src="img/${item.getProductID()}.jpg" alt="img/1.jpg"/>
+                        <div class="boxText">
+                            <h4 class="historyName">${item.getProductName()}</h4>
+                            <p class="historyPrice">${item.getPrice()} SEK   *   ${item.getQuantity()}   =   ${item.getPrice() * item.getQuantity()} SEK</p>
+                        </div>
+                    </div>
                 </c:forEach> 
                 <c:if test="${historyBean.historyList.isEmpty()== false}">
                     <form action="historyServlet" method="POST">

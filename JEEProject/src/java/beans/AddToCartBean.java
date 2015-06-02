@@ -20,7 +20,7 @@ import java.sql.SQLException;
  */
 @Stateless
 public class AddToCartBean {
-   int line =1; 
+   int line; 
    private int productID;
    private int orderID;
    private int quantity;
@@ -32,6 +32,8 @@ public class AddToCartBean {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
+    
+   
     /**
      * @return the productID
      */
@@ -119,6 +121,7 @@ public class AddToCartBean {
         
         query2 = "INSERT INTO ITEM VALUES(?,?,?,?)";                    
         st2 = connection.prepareStatement(query2);
+        getCurrentLine();
         st2.setInt(1, this.line);
         st2.setInt(2, this.orderID);
         st2.setInt(3, this.productID);
@@ -129,4 +132,16 @@ public class AddToCartBean {
         connection.close();
         return success;
     }  
+    
+    private void getCurrentLine() throws ClassNotFoundException, SQLException{
+        Class.forName("org.apache.derby.jdbc.ClientDriver");
+        connection = DriverManager.getConnection(URL);
+        String query = "SELECT MAX(LINE) FROM ITEM WHERE ORDERID = ?";
+        PreparedStatement st = connection.prepareStatement(query);        
+        st.setInt(1, this.orderID);
+        ResultSet results = st.executeQuery();
+        if(results.next()){
+            this.line = 1+results.getInt(1);
+        }
+    }
 }
