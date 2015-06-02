@@ -157,10 +157,18 @@ public class historyServlet extends HttpServlet {
             {
                 userBean.setAddress(request.getParameter("address"));
             }                
+            if(!request.getParameter("city").isEmpty())
+            {
+                userBean.setCity(request.getParameter("city"));
+            }    
+            if(!request.getParameter("country").isEmpty())
+            {
+                userBean.setCountry(request.getParameter("country"));
+            }                
             if(!request.getParameter("email").isEmpty())
             {
                 userBean.setEmail(request.getParameter("email"));
-            }                
+            }   
             try {
                 userBean.UpdateInfo();
                 System.out.println(userBean.getAddress());

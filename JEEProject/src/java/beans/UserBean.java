@@ -149,11 +149,13 @@ public class UserBean {
     public void UpdateInfo() throws ClassNotFoundException, SQLException{
         try{
             String query;
-            query = "UPDATE ACCOUNT SET ADDRESS=?, EMAIL=? WHERE USERNAME =?";
+            query = "UPDATE ACCOUNT SET ADDRESS=?, CITY=?, COUNTRY=?, EMAIL=? WHERE USERNAME =?";
             PreparedStatement st = getDBConnection().prepareStatement(query);
             st.setString(1, this.address);
-            st.setString(2, this.email);
-            st.setString(3, this.username);
+            st.setString(2, this.city);
+            st.setString(3, this.country);
+            st.setString(4, this.email);
+            st.setString(5, this.username);
             System.out.println(getAddress());
             st.executeUpdate();
         }

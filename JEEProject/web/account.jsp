@@ -29,21 +29,23 @@
         
             <div id="content">
                 <h2>Your personal information</h2>
-
-                <h3><c:out value="Firstname" /> : <c:out value="${userBean.getFirstname()}" /></h3>
-                <h3><c:out value="Lastname" /> : <c:out value="${userBean.getLastname()}" /></h3>
-                <h3><c:out value="Address" /> : <c:out value="${userBean.getAddress()}" /></h3>
-                <h3><c:out value="City" /> : <c:out value="${userBean.getCity()}" /></h3>
-                <h3><c:out value="Country" /> : <c:out value="${userBean.getCountry()}" /></h3>
-                <h3><c:out value="Email" /> : <c:out value="${userBean.getEmail()}" /></h3>
-                <h3><c:out value="Balance" /> : <c:out value="${userBean.getBalance()}" /></h3>
-                           
+                <div class="ItemBox">
+                <h3><c:out value="Firstname" />: <c:out value="${userBean.getFirstname()}" /></h3>
+                <h3><c:out value="Lastname" />: <c:out value="${userBean.getLastname()}" /></h3>
+                <h3><c:out value="Address" />: <c:out value="${userBean.getAddress()}" /></h3>
+                <h3><c:out value="City" />: <c:out value="${userBean.getCity()}" /></h3>
+                <h3><c:out value="Country" />: <c:out value="${userBean.getCountry()}" /></h3>
+                <h3><c:out value="Email" />: <c:out value="${userBean.getEmail()}" /></h3>
+                <h3><c:out value="Balance" />: <c:out value="${userBean.getBalance()}" /></h3>
+                </div>          
                 <div id="updateinfo">
                     <br/>
                     <h3>Update your contact information here</h3>
                     <h4>New contact information</h4>
                     <form action="historyServlet" method='POST'>
                       <input type="text" name="address" placeholder="Address" />
+                      <input type="text" name="city" placeholder="City" />
+                      <input type="text" name="country" placeholder="Country" />
                       <input type="email" name ="email" placeholder="E-mail" />
                       <input name="updatebutton" type="submit" value="Update" />
                     </form>  

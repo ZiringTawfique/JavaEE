@@ -4,18 +4,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="CSS/main.css">
+        
+        <link rel="stylesheet" href="CSS/login.css">
         <title>Souk MVC: Online Shop - Log in</title>
     </head>
     <body>
         <div id="container">
-            <div id="header">
-                <h2>Welcome to Souk MVC web store!</h2>
-            </div>
-            
+           
             <div id="login">
 
-                <h1>Log in</h1>
+                <h1>Welcome to Souk MVC web store!</h1>
                 <form action="loginServlet" method="POST">
                     <input type="hidden" name="submit" value='true'/>
                     <input type="text" name="username" placeholder="Username" />
