@@ -4,20 +4,17 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : May 31, 2015, 9:43:03 PM
-    Author     : ZiringTawfique
+    Created on : Jun 2, 2015, 1:41:38 AM
+    Author     : disturbedv1
 */
 
 #productItems{
     width: 350px;
     margin-bottom: 10px;
     margin-top: 5px;
-    
 }
 
 #quantity{
     width: 50px;
     margin-left: 20px;
-    
 }
-

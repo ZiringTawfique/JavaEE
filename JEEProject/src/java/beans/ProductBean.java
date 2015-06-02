@@ -21,7 +21,7 @@ import javax.ejb.Stateless;
 public class ProductBean{
 
     private ArrayList<ProductItem> productList;
-    private static final String URL = "jdbc:derby://localhost:1527/SoukMVC;create=true;user=MoulSouk;password=mika3achra";
+    private static final String URL = "jdbc:derby://localhost:1527/Market;create=true;user=test;password=test";
     private Connection connection;
    
 
@@ -44,7 +44,7 @@ public class ProductBean{
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             connection = DriverManager.getConnection(URL);
             Statement statement = connection.createStatement();
-            String query= "SELECT * FROM Product";
+            String query= "SELECT * FROM Product WHERE QOH > 0";
               
 
             ResultSet results = statement.executeQuery(query);

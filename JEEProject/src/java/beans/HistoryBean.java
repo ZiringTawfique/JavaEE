@@ -46,7 +46,6 @@ public class HistoryBean {
         try{
             this.historyList = new ArrayList<HistoryItem>();
             this.userID = user;
-            System.out.println(this.userID);
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             connection = DriverManager.getConnection(URL);
             String query= "SELECT i.Line, i.OrderID, i.ProductID, p.Name, p.Price, i.Quantity "
@@ -79,7 +78,10 @@ public class HistoryBean {
             this.userID = user;
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             connection = DriverManager.getConnection(URL);
-            String query= "SELECT i.Line, i.OrderID, i.ProductID, p.Name, p.Price, i.Quantity FROM Item i LEFT JOIN Product p ON i.ProductID = p.ID WHERE i.OrderID IN (SELECT o.ID FROM Orders o WHERE o.AccountID = ? AND o.PAID = FALSE) ORDER BY i.OrderID, i.Line";
+            String query= "SELECT i.Line, i.OrderID, i.ProductID, p.Name, p.Price, i.Quantity "
+                    + "FROM Item i LEFT JOIN Product p ON i.ProductID = p.ID "
+                    + "WHERE i.OrderID IN (SELECT o.ID FROM Orders o WHERE o.AccountID = ? AND o.PAID = FALSE) "
+                    + "ORDER BY i.OrderID, i.Line";
             PreparedStatement statement = connection.prepareStatement(query);                
             statement.setInt(1,this.userID);
             ResultSet results = statement.executeQuery();
@@ -100,27 +102,60 @@ public class HistoryBean {
         }
     }
     
-    public void FinalizeDeal(int user) throws ClassNotFoundException, SQLException{
+    public void FinalizeDeal(int user, double balance) throws ClassNotFoundException, SQLException{
         this.userID = user;
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         connection = DriverManager.getConnection(URL);
-        String query= "UPDATE ORDERS O SET O.PAID = TRUE WHERE O.TOTAL <= (SELECT BALANCE FROM ACCOUNT A WHERE A.ID = ?)";
-        PreparedStatement statement = connection.prepareStatement(query);                
-        statement.setInt(1,this.userID);
-        statement.executeUpdate();
-        ShowCart(user);
-        connection.close();
+        double total = computeOrderTotal();
+        if(total < balance){
+            String query1 = "UPDATE ORDERS O SET O.PAID = TRUE, O.TOTAL = ? "
+                    + "WHERE O.ID = (SELECT MAX(r.ID) FROM ORDERS r WHERE ACCOUNTID = ? AND r.PAID = FALSE)";
+            PreparedStatement statement = connection.prepareStatement(query1);                
+            statement.setDouble(1, total);
+            statement.setInt(2,this.userID);
+            statement.executeUpdate();
+            
+            String query2 = "UPDATE ACCOUNT A SET A.BALANCE = (A.BALANCE - ?) WHERE A.ID = ?";
+            statement = connection.prepareStatement(query2);
+            statement.setDouble(1, total);
+            statement.setInt(2,this.userID);
+            statement.executeUpdate();
+
+            String query3 = "INSERT INTO ORDERS (ACCOUNTID) VALUES (?)";
+            PreparedStatement statement2 = connection.prepareStatement(query3);
+            statement2.setInt(1,this.userID);
+            System.out.println("=======Executing order insert");
+            statement2.executeUpdate();
+            System.out.println("=======Executed order insert");
+
+            ShowCart(user);
+            connection.close();
+        }
+    }
+    
+    private double computeOrderTotal(){
+        double total=0;
+        
+        for(int i=0; i<this.historyList.size();i++){
+            total += (historyList.get(i).getPrice() * historyList.get(i).getQuantity());
+        }
+        return total;
     }
     
     public void EmptyCart(int user) throws ClassNotFoundException, SQLException{
         this.userID = user;
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         connection = DriverManager.getConnection(URL);
-        String query= "DELETE FROM ORDERS WHERE ACCOUNTID = ? AND PAID = FALSE";
-        PreparedStatement statement = connection.prepareStatement(query);
+        String query1= "DELETE FROM ORDERS WHERE ACCOUNTID = ? AND PAID = FALSE";
+        PreparedStatement statement = connection.prepareStatement(query1);
         statement.setInt(1,this.userID);
-        
         statement.executeUpdate();
+        
+        String query2 = "INSERT INTO ORDERS (ACCOUNTID) VALUES (?)";
+        statement = connection.prepareStatement(query2);
+        statement.setInt(1,this.userID);
+        statement.executeUpdate();
+        
         ShowCart(user);
         connection.close();
     }

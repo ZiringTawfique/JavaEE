@@ -24,7 +24,7 @@ public class UserBean {
     private String city;
     private String country;
     private double balance;
-    private static final String URL = "jdbc:derby://localhost:1527/SoukMVC;create=true;user=MoulSouk;password=mika3achra";
+    private static final String URL = "jdbc:derby://localhost:1527/Market;create=true;user=test;password=test";
     
     public int getID() {
         return ID;

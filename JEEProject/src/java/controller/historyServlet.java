@@ -84,19 +84,7 @@ public class historyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
-      
-        
         userBean = (UserBean)request.getSession().getAttribute("userBean");
-       
-        
-        try {
-            productBean.readProduct();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
         if(request.getParameter("historyButton") != null){
             try{
@@ -119,42 +107,51 @@ public class historyServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("account.jsp");           
             rd.forward(request, response);
         }
-         else if(request.getParameter("buyButton") != null){
-             boolean itemBought=true;
-             boolean itemNOTBought=true;
-        int productQuantity = Integer.parseInt(request.getParameter("quantity"));
-        int selectedProductID = Integer.parseInt(request.getParameter("selectedProductId"));
-        addToCartBean.setQuantity(productQuantity);
-        addToCartBean.setProductID(selectedProductID);
+        
+        else if(request.getParameter("addToCartButton") != null){
+            boolean itemBought=true;
+            boolean itemNOTBought=true;
+            int productQuantity = Integer.parseInt(request.getParameter("quantity"));
+            int selectedProductID = Integer.parseInt(request.getParameter("selectedProductId"));
+            
             try {
+                addToCartBean.setQuantity(productQuantity);
+                addToCartBean.setProductID(selectedProductID);
                 addToCartBean.getOrderID(userBean.getID());
-                 status = addToCartBean.addItem();
-                
-               
+                status = addToCartBean.addItem();
+                productBean.readProduct();
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
-        request.setAttribute("productBean",productBean);
-        if (status ==1){
-        request.setAttribute("itemBought",itemBought);}
-        else {request.setAttribute("itemNOTBought",itemNOTBought);
-        
+            
+            request.setAttribute("productBean",productBean);
+            if (status ==1){
+                request.setAttribute("itemBought",itemBought);
+            }
+            else {
+                request.setAttribute("itemNOTBought",itemNOTBought);
+            }
+            RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
+            rd.forward(request, response);    
         }
-        RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
-        rd.forward(request, response);
-             
-             
-        }
+         
         else if(request.getParameter("productButton") != null){
+            try {
+                productBean.readProduct();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
             request.setAttribute("historyBean",historyBean);
             request.setAttribute("productBean",productBean);
             RequestDispatcher rd = request.getRequestDispatcher("productPage.jsp");
             rd.forward(request, response);
         }
         
+        //Account update button
         else if(request.getParameter("updatebutton") != null){
             if(!request.getParameter("address").isEmpty())
             {
@@ -188,11 +185,23 @@ public class historyServlet extends HttpServlet {
             processRequest(request, response);
         }
         
+        //Logout button
+        else if(request.getParameter("logoutButton") != null){
+            request.logout();
+              
+            request.getRequestDispatcher("index.jsp").include(request, response);  
+              
+            HttpSession session=request.getSession();  
+            session.invalidate();
+        }
+        
+        //Cart Page buttons
         else if (request.getParameter("finalizeButton") != null){
             try{
-                historyBean.FinalizeDeal(userBean.getID());
+                historyBean.FinalizeDeal(userBean.getID(), userBean.getBalance());
                 request.setAttribute("historyBean",historyBean);
                 userBean.UpdateBean(userBean.getID());
+                addToCartBean.initLine();
                 RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
                 rd.forward(request, response);
             }
@@ -207,6 +216,7 @@ public class historyServlet extends HttpServlet {
                 historyBean.EmptyCart(userBean.getID());
                 System.out.println("EMPTY CART REACHED");
                 request.setAttribute("historyBean",historyBean);
+                addToCartBean.initLine();
                 RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
                 rd.forward(request, response);
             }
@@ -214,15 +224,6 @@ public class historyServlet extends HttpServlet {
                 request.setAttribute("message",e);
                 response.sendRedirect("error.jsp");
             }
-        }
-        
-        else if(request.getParameter("logoutButton") != null){
-            request.logout();
-              
-            request.getRequestDispatcher("index.jsp").include(request, response);  
-              
-            HttpSession session=request.getSession();  
-            session.invalidate();
         }
     }
 

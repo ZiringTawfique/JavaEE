@@ -43,7 +43,6 @@ public class loginServlet extends HttpServlet {
         
         ProductBean productBean = new ProductBean();
         
-        
         try{
             if(userBean.authenticate() == true){
                 //System.out.println("HELLO");

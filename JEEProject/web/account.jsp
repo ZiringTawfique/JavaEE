@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="CSS/main.css" rel="stylesheet" type="text/css"/>
-        <title>My Account</title>
+        <title>Souk MVC: Online Shop - My Account</title>
     </head>
     <body>        
         <div id="container">
