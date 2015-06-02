@@ -23,9 +23,9 @@
               
                 <form action="historyServlet" method="POST">
                     <input name="productButton" type="submit" value="Products" />
+                    <input name="cartButton" type ="submit" value="Go to Cart" />
                     <input name="historyButton" type="submit" value="Past Orders" />
                     <input name="accountButton" type="submit" value="Account" />
-                    <input name="cartButton" type ="submit" value="Go to Cart" />
                     <input name="logoutButton" type="submit" value="Log out"/>
                 </form> 
             </div>
@@ -58,7 +58,11 @@
             </c:if>
                 
             <div id="footer">
-                <h2>Random Online Store</h2>                
+                <h2>Souk MVC - All Rights Reserved</h2>
+                <h4><c:out value="Web store made by: "/></h4>
+                <h6 id="namespacing">Garara, Ilyass</h6>
+                <h6 id="namespacing">Georgiadis, Charalampos</h6>
+                <h6 id="namespacing">Tawfique, Ziring</h6>
             </div>
         </div>
     </body>

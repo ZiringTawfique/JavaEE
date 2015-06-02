@@ -105,7 +105,6 @@ public class AddToCartBean {
         ResultSet results = st.executeQuery();
         while(results.next()){
             if(this.productID == results.getInt(1)){
-                System.out.println("=========product already exists, adding QTY");
                 query2 = "UPDATE ITEM SET QUANTITY = (QUANTITY + 1)"
                         + "WHERE PRODUCTID = ? AND ORDERID = ?";
                 st2 = connection.prepareStatement(query2);
@@ -114,12 +113,10 @@ public class AddToCartBean {
                 int success =  st2.executeUpdate();
                 line++;
                 connection.close();
-                System.out.println("=========product already exists, ADDED QTY");
                 return success;
             }   
         }
         
-        System.out.println("=========NO product, creating NEW ITEM");
         query2 = "INSERT INTO ITEM VALUES(?,?,?,?)";                    
         st2 = connection.prepareStatement(query2);
         st2.setInt(1, this.line);
@@ -130,7 +127,6 @@ public class AddToCartBean {
         int success =  st2.executeUpdate();
         line++;
         connection.close();
-        System.out.println("=========NO product, NEW ITEM created");
         return success;
     }  
 }

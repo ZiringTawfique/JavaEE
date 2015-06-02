@@ -16,28 +16,29 @@
     <body>        
         <div id="container">
             <div id="header">
-                <h2>Welcome <c:out value="${userBean.firstname}"/>!</h2>
+                <h2>Your Account Information</h2>
+              
                 <form action="historyServlet" method="POST">
                     <input name="productButton" type="submit" value="Products" />
+                    <input name="cartButton" type ="submit" value="Go to Cart" />
                     <input name="historyButton" type="submit" value="Past Orders" />
                     <input name="accountButton" type="submit" value="Account" />
-                    <input name="cartButton" type ="submit" value="Go to Cart" />
                     <input name="logoutButton" type="submit" value="Log out"/>
                 </form> 
             </div>
         
-                    <h2>Your personal information</h2>
-                    
-                    <h3><c:out value="Firstname" /> : <c:out value="${userBean.getFirstname()}" /></h3>
-                    <h3><c:out value="Lastname" /> : <c:out value="${userBean.getLastname()}" /></h3>
-                    <h3><c:out value="Address" /> : <c:out value="${userBean.getAddress()}" /></h3>
-                    <h3><c:out value="City" /> : <c:out value="${userBean.getCity()}" /></h3>
-                    <h3><c:out value="Country" /> : <c:out value="${userBean.getCountry()}" /></h3>
-                    <h3><c:out value="Email" /> : <c:out value="${userBean.getEmail()}" /></h3>
-                    <h3><c:out value="Balance" /> : <c:out value="${userBean.getBalance()}" /></h3>
-                       
-                    
-                 <div id="updateinfo">
+            <div id="content">
+                <h2>Your personal information</h2>
+
+                <h3><c:out value="Firstname" /> : <c:out value="${userBean.getFirstname()}" /></h3>
+                <h3><c:out value="Lastname" /> : <c:out value="${userBean.getLastname()}" /></h3>
+                <h3><c:out value="Address" /> : <c:out value="${userBean.getAddress()}" /></h3>
+                <h3><c:out value="City" /> : <c:out value="${userBean.getCity()}" /></h3>
+                <h3><c:out value="Country" /> : <c:out value="${userBean.getCountry()}" /></h3>
+                <h3><c:out value="Email" /> : <c:out value="${userBean.getEmail()}" /></h3>
+                <h3><c:out value="Balance" /> : <c:out value="${userBean.getBalance()}" /></h3>
+                           
+                <div id="updateinfo">
                     <br/>
                     <h3>Update your contact information here</h3>
                     <h4>New contact information</h4>
@@ -48,5 +49,14 @@
                     </form>  
                     <!-- TODO: Check first if fields are empty, then update -->
                 </div>
+            </div>
+                
+            <div id="footer">
+                <h2>Souk MVC - All Rights Reserved</h2>
+                <h4><c:out value="Web store made by: "/></h4>
+                <h6 id="namespacing">Garara, Ilyass</h6>
+                <h6 id="namespacing">Georgiadis, Charalampos</h6>
+                <h6 id="namespacing">Tawfique, Ziring</h6>
+            </div>
         </div>
     </body>

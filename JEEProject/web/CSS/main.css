@@ -19,7 +19,11 @@ and open the template in the editor.
 #content {
     display: block;
     border: 1px solid black;
-    min-height: 1000px;
+    min-height: 470px;
+}
+
+#login{
+    min-height: 470px;
 }
 
 #footer { 
@@ -70,4 +74,8 @@ img{
 
 #productTable{
     border: 2px red solid;
+}
+
+#namespacing{
+    margin-left: 200px;
 }

@@ -10,34 +10,36 @@
     <body>
         <div id="container">
             <div id="header">
-                <h2>Welcome to Sock Online Shopping </h2>
+                <h2>Welcome to Souk MVC web store!</h2>
             </div>
- <div id="login">
+            
+            <div id="login">
 
-  <h1>Log in</h1>
-  <form action="loginServlet" method="POST">
-    <input type="hidden" name="submit" value='true'/>
-    <input type="text" name="username" placeholder="Username" />
-    <input type="password" name ="password" placeholder="Password" />
-    <input id="loginbutton" type="submit" value="Log in"/>
-  </form>
-  
-  <c:if test="${param.submit}"> 
-      
-  <c:if test="${empty param.username || empty param.password}">
-        <p>Please enter your username and password</p>
-  </c:if>
-      
-  </c:if>
-  
-  <c:if test="${invalidLogin == true && not empty param.username && not empty param.password}">
-      <p>Sorry, the account you have provided does not exists</p>        
-  </c:if>
-  
-  
-</div>
+                <h1>Log in</h1>
+                <form action="loginServlet" method="POST">
+                    <input type="hidden" name="submit" value='true'/>
+                    <input type="text" name="username" placeholder="Username" />
+                    <input type="password" name ="password" placeholder="Password" />
+                    <input id="loginbutton" type="submit" value="Log in"/>
+                </form>
+
+                <c:if test="${param.submit}"> 
+                    <c:if test="${empty param.username || empty param.password}">
+                        <p>Please enter your username and password</p>
+                    </c:if>
+                </c:if>
+
+                <c:if test="${invalidLogin == true && not empty param.username && not empty param.password}">
+                    <p>Sorry, the account you have provided does not exists</p>        
+                </c:if>
+            </div>
+            
             <div id="footer">
-                <h2>Random Online Store</h2>
+                <h2>Souk MVC - All Rights Reserved</h2>
+                <h4><c:out value="Web store made by: "/></h4>
+                <h6 id="namespacing">Garara, Ilyass</h6>
+                <h6 id="namespacing">Georgiadis, Charalampos</h6>
+                <h6 id="namespacing">Tawfique, Ziring</h6>
             </div>
         </div>
     </body>
