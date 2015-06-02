@@ -89,7 +89,6 @@ public class AddToCartBean {
         if(results.next()){ //if replaced while
             this.orderID = results.getInt(1);
         }
-       // System.out.println(orderID);
         connection.close();
         return orderID;
     };
@@ -98,17 +97,40 @@ public class AddToCartBean {
     public int addItem () throws ClassNotFoundException, SQLException{
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         connection = DriverManager.getConnection(URL);
+        String query = "SELECT PRODUCTID FROM ITEM WHERE ORDERID = ?";
+        String query2;
+        PreparedStatement st2;
+        PreparedStatement st = connection.prepareStatement(query);        
+        st.setInt(1, this.orderID);
+        ResultSet results = st.executeQuery();
+        while(results.next()){
+            if(this.productID == results.getInt(1)){
+                System.out.println("=========product already exists, adding QTY");
+                query2 = "UPDATE ITEM SET QUANTITY = (QUANTITY + 1)"
+                        + "WHERE PRODUCTID = ? AND ORDERID = ?";
+                st2 = connection.prepareStatement(query2);
+                st2.setInt(1, this.productID);
+                st2.setInt(2, this.orderID);
+                int success =  st2.executeUpdate();
+                line++;
+                connection.close();
+                System.out.println("=========product already exists, ADDED QTY");
+                return success;
+            }   
+        }
         
-        String query = "INSERT INTO ITEM VALUES(?,?,?,?)";                    
-        PreparedStatement st = connection.prepareStatement(query);
-        st.setInt(1, this.line);
-        st.setInt(2, this.orderID);
-        st.setInt(3, this.productID);
-        st.setInt(4, this.quantity); 
+        System.out.println("=========NO product, creating NEW ITEM");
+        query2 = "INSERT INTO ITEM VALUES(?,?,?,?)";                    
+        st2 = connection.prepareStatement(query2);
+        st2.setInt(1, this.line);
+        st2.setInt(2, this.orderID);
+        st2.setInt(3, this.productID);
+        st2.setInt(4, this.quantity); 
 
-        int success =  st.executeUpdate();
+        int success =  st2.executeUpdate();
         line++;
         connection.close();
+        System.out.println("=========NO product, NEW ITEM created");
         return success;
     }  
 }

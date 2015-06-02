@@ -115,11 +115,11 @@ public class historyServlet extends HttpServlet {
             int selectedProductID = Integer.parseInt(request.getParameter("selectedProductId"));
             
             try {
+                productBean.readProduct();
                 addToCartBean.setQuantity(productQuantity);
                 addToCartBean.setProductID(selectedProductID);
                 addToCartBean.getOrderID(userBean.getID());
                 status = addToCartBean.addItem();
-                productBean.readProduct();
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(historyServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
